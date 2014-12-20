@@ -39,6 +39,12 @@ INSTALLED_APPS = (
     'django_extensions',
     'superlists',
     'lists',
+    'accounts',
+)
+
+AUTH_USER_MODEL = 'accounts.ListUser'
+AUTHENTICATION_BACKENDS = (
+    'accounts.authentication.PersonalAuthenticationBackend',
 )
 
 MIDDLEWARE_CLASSES = (
