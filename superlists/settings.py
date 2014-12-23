@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'superlists',
     'lists',
-#    'accounts',
+    'accounts',
 )
 
 # AUTH_USER_MODEL = 'accounts.ListUser'
@@ -91,3 +91,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'superlists', 'static'),
+)
