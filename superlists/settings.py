@@ -12,6 +12,26 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'logfile': {
+            'level':'DEBUG',
+            'class':'logging.FileHandler',
+            'filename': BASE_DIR + "/logfile",
+        },
+    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['console', 'logfile']
+    },
+}
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
@@ -93,31 +113,4 @@ STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static'))
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'superlists', 'static'),
 )
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-        'logfile': {
-            'level':'DEBUG',
-            'class':'logging.FileHandler',
-            'filename': BASE_DIR + "/logfile",
-        },
-    },
-    'loggers': {
-        'lists': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-        'accounts': {
-            'handlers': ['console', 'logfile'],
-            'level': 'DEBUG',
-        },
-    },
-    'root': {'level': 'INFO'},
-}
 

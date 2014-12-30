@@ -2,3 +2,4 @@ Django==1.7.1
 django-extensions==1.4.8
 gunicorn==19.1.1
 six==1.8.0
+requests==2.5.0
