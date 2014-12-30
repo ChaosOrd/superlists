@@ -1,6 +1,9 @@
 import requests
 from django.contrib.auth import get_user_model
 User = get_user_model()
+import logging
+logger = logging.getLogger(__name__)
+logger.warning('Declared logger: %s' % __name__)
 
 PERSONA_VERIFY_URL = 'https://verifier.login.persona.org/verify'
 DOMAIN = 'localhost'
@@ -9,6 +12,7 @@ DOMAIN = 'localhost'
 class PersonaAuthenticationBackend(object):
 
     def authenticate(self, assertion):
+        logger.warning('in authenticate')
         response = requests.post(
             PERSONA_VERIFY_URL,
             data={'assertion': assertion, 'audience': DOMAIN}

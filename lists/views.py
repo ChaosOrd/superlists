@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from lists.models import Item, List
 from lists.forms import ItemForm, ExistingListItemForm
+import logging
+logger = logging.getLogger(__name__)
 
 
 def home_page(request):
+    logger.warning('in home page')
     items = Item.objects.all()
     return render(request, 'home.html', {'items': items, 'form': ItemForm()})
 
