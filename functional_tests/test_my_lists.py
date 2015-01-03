@@ -5,12 +5,18 @@ from django.contrib.auth import (BACKEND_SESSION_KEY,
 User = get_user_model()
 
 from .base import FunctionalTest
+from .server_tools import create_session_on_server
+from .management.commands.create_session import create_pre_authenticated_session
 from django.contrib.sessions.backends.db import SessionStore
 
 
 class MyListsTest(FunctionalTest):
 
     def create_pre_authenticated_session(self, email):
+        if self.against_staging:
+            session_key = create_session_on_server(self.server_host, email)
+        else:
+            session_key = create_pre_authenticated_session(email)
         user = User.objects.create(email=email)
         session = SessionStore()
         session[SESSION_KEY] = user.pk
@@ -21,7 +27,7 @@ class MyListsTest(FunctionalTest):
         self.browser.get(self.server_url + '/404_no_such_url/')
         self.browser.add_cookie(dict(
             name=settings.SESSION_COOKIE_NAME,
-            value=session.session_key,
+            value=session_key,
             path='/',
         ))
 
