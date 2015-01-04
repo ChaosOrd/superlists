@@ -1,5 +1,5 @@
 from os import path
-import subpprocess
+import subprocess
 THIS_FOLDER = path.dirname(path.abspath(__file__))
 
 
@@ -15,7 +15,7 @@ def create_session_on_server(host, email):
     ).decode().strip()
 
 
-def reset_datbase(host):
+def reset_database(host):
     subpprocess.check_call(
         ['fab', 'reset_database', '--host={}'.format(host)],
         cwd=THIS_FOLDER

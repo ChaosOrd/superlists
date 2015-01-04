@@ -1,7 +1,7 @@
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium.webdriver.support.ui import WebDriverWait
-from server_tools import reset_database
+from .server_tools import reset_database
 import sys
 
 
@@ -16,10 +16,12 @@ class FunctionalTest(StaticLiveServerTestCase):
                 cls.against_staging = True
                 return
         super().setUpClass()
+        cls.against_staging = False
         cls.server_url = cls.live_server_url
 
-    def terDownClass(cls):
-        if cls.server_url == cls.server_url:
+    @classmethod
+    def tearDownClass(cls):
+        if not cls.against_staging:
             super().tearDownClass()
 
     def setUp(self):
@@ -29,6 +31,7 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
+        super().tearDown()
         self.browser.quit()
 
     def check_for_row_in_list_table(self, row_text):

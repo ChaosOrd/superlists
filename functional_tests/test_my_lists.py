@@ -1,13 +1,11 @@
 from django.conf import settings
-from django.contrib.auth import (BACKEND_SESSION_KEY,
-                                 SESSION_KEY, get_user_model)
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 from .base import FunctionalTest
 from .server_tools import create_session_on_server
 from .management.commands.create_session import create_pre_authenticated_session
-from django.contrib.sessions.backends.db import SessionStore
 
 
 class MyListsTest(FunctionalTest):
@@ -17,11 +15,7 @@ class MyListsTest(FunctionalTest):
             session_key = create_session_on_server(self.server_host, email)
         else:
             session_key = create_pre_authenticated_session(email)
-        user = User.objects.create(email=email)
-        session = SessionStore()
-        session[SESSION_KEY] = user.pk
-        session[BACKEND_SESSION_KEY] = settings.AUTHENTICATION_BACKENDS[0]
-        session.save()
+
         # To set a cookie we need to first visit the domain.
         # 404 page loads the quickest
         self.browser.get(self.server_url + '/404_no_such_url/')
